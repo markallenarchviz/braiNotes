@@ -4,6 +4,7 @@
   "description": "",
   "main": "src/server.js",
   "scripts": {
+    "vercel-build": "npm install",
     "start": "nodemon .",
     "dev": "nodemon ."
   },
