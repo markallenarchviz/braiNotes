@@ -3,6 +3,7 @@ const app = express();
 
 //const cors = require('cors');
 const conn = require('./config/conn');
+const errorHanddler = require('./middlewares/errorHanddler');
 
 const postRouter = require('./router/post.route');
 
@@ -12,6 +13,7 @@ app.use(express.json());
 conn();
 
 app.use('/post', postRouter)
+app.use(errorHanddler);
 
 module.exports = app;
 
