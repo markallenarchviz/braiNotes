@@ -39,9 +39,21 @@ const deleteById = async (req, res, next) => {
     }
 };
 
+const updateById = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const { title, postBody } = req.body;
+        const updateById = await postService.updateById(id, title, postBody)
+        return res.status(201).json(updateById);
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports = {
     addPost,
     getAll,
     getById,
     deleteById,
+    updateById,
 };

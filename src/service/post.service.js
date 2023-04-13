@@ -25,9 +25,20 @@ const deleteById = async (id) => {
     return deleteById
 };
 
+const updateById = async (id, title, postBody) => {
+    const errMsg = { status: 400, message: 'Some required fields are missing' };
+    if (!title || !postBody) throw errMsg;
+    const updateById = await PostModel.findByIdAndUpdate(id, {
+        title,
+        postBody
+    })
+    return updateById
+};
+
 module.exports = {
     addPost,
     getAll,
     getById,
     deleteById,
+    updateById,
 }
