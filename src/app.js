@@ -11,7 +11,7 @@ app.use(express.json());
 //app.use(cors);
 conn();
 
-app.use(postRouter)
+app.use('/post', postRouter)
 
 module.exports = app;
 
