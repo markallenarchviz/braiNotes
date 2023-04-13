@@ -1,8 +1,12 @@
-const addPost = async (_req, res, next) => {
+const postService = require('../service/post.service');
+
+const addPost = async (req, res, _next) => {
     try {
-        return res.status(201).json({ message: "rota de addPost" });
+        const { title, postBody } = req.body;
+        const addNewPost = await postService.addPost( title, postBody )
+        return res.status(201).json(addNewPost);
     } catch (err) {
-        next(err);
+        console.log(err);
     }
 };
 
