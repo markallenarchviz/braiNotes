@@ -12,7 +12,7 @@ app.use(express.json());
 //app.use(cors);
 conn();
 
-app.use('/post', postRouter)
+app.use('/api/post', postRouter)
 app.use(errorHanddler);
 
 module.exports = app;
