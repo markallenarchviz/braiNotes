@@ -6,6 +6,7 @@ const conn = require('./config/conn');
 const errorHanddler = require('./middlewares/errorHanddler');
 
 const postRouter = require('./router/post.route');
+const userRouter = require('./router/user.route');
 
 app.use(express.json());
 
@@ -13,6 +14,7 @@ app.use(express.json());
 conn();
 
 app.use('/api/post', postRouter)
+app.use('/user', userRouter)
 app.use(errorHanddler);
 
 module.exports = app;
