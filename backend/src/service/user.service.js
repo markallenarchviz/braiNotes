@@ -4,15 +4,17 @@ const { User: UserModel, User } = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const signup = async (username, email, password) => {
+const signup = async (username, email, pass) => {
     const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync(password, salt);
+    const hash = bcrypt.hashSync(pass, salt);
 
     const newUser = await UserModel.create({ username, email, password: hash });
 
     const token = jwt.sign({ id: newUser._id }, process.env.JWT);
 
-    return { token, newUser };
+    const { password, ...othersData } = newUser._doc
+
+    return { token, othersData };
 };
 
 const signin = async (username, pass) => {
@@ -28,7 +30,15 @@ const signin = async (username, pass) => {
 
     return { token, othersData };
 }
+
+const getById = async (id) => {
+    const user = await User.findById(id);
+    const { password, ...othersData } = user._doc
+    return othersData;
+}
+
 module.exports = {
     signup,
     signin,
+    getById,
 };

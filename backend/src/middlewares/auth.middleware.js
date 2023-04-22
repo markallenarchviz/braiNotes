@@ -1,13 +1,17 @@
-const { validadateToken } = require('../utils/auth');
+const jwt = require('jsonwebtoken');
 
 const authToken = (req, _res, next) => {
     try {
-        const { authorization } = req.headers;
-        validadateToken(authorization);
-        next();
+        const token = req.cookies.access_token;
+        const errMsg = { status: 400, message: 'you are not authenticated' };
+        if(!token) throw errMsg
+
+        jwt.verify(token, process.env.JWT, (err, user) => {
+            if (err) throw errMsg
+            req.user = user;
+            next();
+        })
     } catch (err) {
-        const msg = { status: 401, message: 'Expired or invalid token' };
-        if (err.message === 'invalid token' || err.message === 'jwt malformed') throw msg;
         next(err);
     }
 };
