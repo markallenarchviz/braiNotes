@@ -1,12 +1,10 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 
-const pass = process.env.MONGODB_PASSWORD;
-
 async function main() {
     try {
         await mongoose.set('strictQuery', true);
-        await mongoose.connect(`mongodb+srv://markallenarchviz:${pass}@cluster0.unqxatn.mongodb.net/?retryWrites=true&w=majority`)
+        await mongoose.connect(process.env.MONGODB_URI)
         console.log('conectou');
     } catch (error) {
         console.log(error);
