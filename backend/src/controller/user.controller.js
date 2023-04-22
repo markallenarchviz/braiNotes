@@ -17,12 +17,12 @@ const signup = async (req, res, next) => {
 const signin = async (req, res, next) => {
     try {
         const { username, password } = req.body;
-        const user = await userService.signin(username, password);
-        return res.cookie("access_token", 'asdsadsad', {
+        const { token, othersData } = await userService.signin(username, password);
+        return res.cookie("access_token", token, {
             httpOnly: true,
         })
         .status(200)
-        .json(user);
+        .json(othersData);
     } catch (err) {
         next(err);
     }
