@@ -17,7 +17,7 @@ const userSchema = new Schema({
     profileProfile: { type: String },
     followers: { type: Array, defaultValue: [] },
     following: { type: Array, defaultValue: [] },
-    description: { type: String },
+    description: { type: String, defaultValue: '' },
 },
     { timestamps: true }
 );

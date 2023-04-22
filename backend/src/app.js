@@ -20,5 +20,3 @@ app.use('/user', userRouter)
 app.use(errorHanddler);
 
 module.exports = app;
-
-// ZDV6gl2TsqLL3EiT

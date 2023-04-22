@@ -42,8 +42,38 @@ const getById = async (req, res, next) => {
     }
 };
 
+const updateBio = async (req, res, next) => {
+    try {
+        const { body } = req;
+        const paramsId = req.params.id;
+        const userId = req.user.id;
+
+        const updateBio = await userService.updateBio(paramsId, userId, body);
+
+        return res.status(200).json(updateBio);
+    } catch (err) {
+        next(err);
+    }
+};
+
+const deleteUser = async (req, res, next) => {
+    try {
+        const paramsId = req.params.id;
+        const userId = req.user.id;
+
+        await userService.deleteUser(paramsId, userId);
+        
+        return res.status(200).json({ message: "user deleted" });
+    } catch (err) {
+        next(err);
+    }
+};
+
+
 module.exports = {
     signup,
     signin,
     getById,
+    updateBio,
+    deleteUser,
 };

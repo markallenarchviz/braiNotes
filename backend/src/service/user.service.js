@@ -37,8 +37,35 @@ const getById = async (id) => {
     return othersData;
 }
 
+const updateBio = async (paramsId, userId, body) => {
+    if (paramsId === userId) {
+        const updatedUser = await User.findByIdAndUpdate(paramsId, {
+            $set: body,
+        }, {
+            new: true
+        }
+        )
+        return updatedUser.description
+    } else {
+        const errMsg = { status: 403, message: 'you can only update your own account' };
+        throw errMsg
+    }
+}
+
+const deleteUser = async (paramsId, userId) => {
+    if (paramsId === userId) {
+        await User.findByIdAndDelete(paramsId)
+    } else {
+        const errMsg = { status: 403, message: 'you can only delete your own account' };
+        throw errMsg
+    }
+}
+
+
 module.exports = {
     signup,
     signin,
     getById,
+    updateBio,
+    deleteUser,
 };
