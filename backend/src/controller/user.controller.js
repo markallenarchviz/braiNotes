@@ -1,8 +1,14 @@
-const postService = require('../service/post.service');
+const userService = require('../service/user.service');
 
 const signup = async (req, res, next) => {
     try {
-        return res.status(201).json({ message: 'signup route' });
+        const { username, email, password } = req.body;
+        const token = await userService.signup(username, email, password);
+        return res.cookie("access_token", token, {
+            httpOnly: true,
+        })
+        .status(200)
+        .json(token);
     } catch (err) {
         next(err);
     }
