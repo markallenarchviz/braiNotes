@@ -3,12 +3,26 @@ const userService = require('../service/user.service');
 const signup = async (req, res, next) => {
     try {
         const { username, email, password } = req.body;
-        const token = await userService.signup(username, email, password);
+        const { token, newUser } = await userService.signup(username, email, password);
         return res.cookie("access_token", token, {
             httpOnly: true,
         })
         .status(200)
-        .json(token);
+        .json(newUser);
+    } catch (err) {
+        next(err);
+    }
+};
+
+const signin = async (req, res, next) => {
+    try {
+        const { username, password } = req.body;
+        const user = await userService.signin(username, password);
+        return res.cookie("access_token", 'asdsadsad', {
+            httpOnly: true,
+        })
+        .status(200)
+        .json(user);
     } catch (err) {
         next(err);
     }
@@ -16,4 +30,5 @@ const signup = async (req, res, next) => {
 
 module.exports = {
     signup,
+    signin,
 };
